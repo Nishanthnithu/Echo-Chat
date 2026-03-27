@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Ramsina&family=Roboto+Mono:ital@1&family=Shizuru&display=swap');
+*{
+    
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+
+
+body, button, input {
+  font-family: "Ramsina", serif;
+}
+
+.shizuru-regular {
+  font-family: "Shizuru", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ramsina-regular {
+  font-family: "Ramsina", serif;
+  font-weight: 400;
+  font-style: normal;
+}
