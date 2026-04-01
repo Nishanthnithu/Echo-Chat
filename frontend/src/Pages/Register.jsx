@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Link } from "react-router-dom";
-import Logo from '../assets/logo.png'
+import Logo from '../assets/logo.png';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
 
@@ -9,12 +11,47 @@ export default function Register() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
+
+  const handleValidation = () => {
+    const { password, confirmPassword, username, email } = values;
+
+    if (username.length < 3) {
+      toast.error("Username must be at least 3 characters", { theme: "dark" });
+      return false;
+    }
+
+    if (email === "") {
+      toast.error("Email is required", { theme: "dark" });
+      return false;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters", { theme: "dark" });
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match", { theme: "dark" });
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values);
+
+    if (handleValidation()) {
+      console.log(values);
+
+      toast.success("User Registered Successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored"
+      });
+    }
   };
 
   const handleChange = (event) => {
@@ -22,26 +59,53 @@ export default function Register() {
   };
 
   return (
-    <FormContainer>
-      <form onSubmit={handleSubmit}>
-        <div className="brand">
-          <img src={Logo} alt="" />
+    <>
+      <FormContainer>
+        <form onSubmit={handleSubmit}>
           
-        </div>
+          <div className="brand">
+            <img src={Logo} alt="logo" />
+          </div>
 
-        <input type="text" placeholder='UserName' name='username' onChange={handleChange} />
-        <input type="email" placeholder='Email' name='email' onChange={handleChange} />
-        <input type="password" placeholder='Password' name='password' onChange={handleChange} />
-        <input type="password" placeholder='Confirm Password' name='confirmPassword' onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            onChange={handleChange}
+          />
 
-        <button type='submit'>Create User</button>
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={handleChange}
+          />
 
-        <span>
-          Already Have An Account? <Link to="/login">Login</Link>
-        </span>
-      </form>
-    </FormContainer>
-  )
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            onChange={handleChange}
+          />
+
+          <button type="submit">Create User</button>
+
+          <span>
+            Already have an account? <Link to="/login">Login</Link>
+          </span>
+
+        </form>
+      </FormContainer>
+      <ToastContainer />
+    </>
+  );
 }
 
 
